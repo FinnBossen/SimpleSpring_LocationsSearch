@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="layout :: myHeader"></div>
+</head>
+<body>
+<div th:replace="layout :: myLayout"></div>
+<form th:fragment="locationsForm" action="#" th:action="@{/locations}" th:object="${locationInputForm}" method="post">
+    <div class="formWrapper">
+        <table>
+            <tr>
+                <td>Enter LocationName or PostalCode:</td>
+                <td><input type="text" th:field="*{input}"/></td>
+                <td class="Error" th:if="${#fields.hasErrors('input')}" th:errors="*{input}">No Input Entered</td>
+                <td class="Error" th:if="${errorMessage}" th:text="${errorMessage}">Can not Find Input</td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit">Submit</button>
+                </td>
+            </tr>
+        </table>
+        <div class="ValidData" th:if="${validLocation}" th:text="${validLocation}">
+        </div>
+    </div>
+    <div class="StoredLocations">
+        <h2>List of searchable locations</h2>
+        <table>
+            <tr>
+                <th>LocationName</th>
+                <th>PostalCode</th>
+            </tr>
+            <tr th:each="location: ${locations}">
+                <td th:text="${location.getLocationName()}"/>
+                <td th:text="${location.getPostalCode()}"/>
+            </tr>
+        </table>
+    </div>
+</form>
+</body>
+</html>

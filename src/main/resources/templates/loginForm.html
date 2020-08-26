@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="layout :: myHeader"></div>
+</head>
+<div th:replace="layout :: myLayout"></div>
+<body>
+<form th:fragment="loginForm" action="#" th:action="@{/login}" th:object="${loginForm}" method="post">
+    <table>
+        <tr>
+            <td> userID:</td>
+            <td><input type="text" th:field="*{userID}"/></td>
+            <td class="Error" th:if="${#fields.hasErrors('userID')}" th:errors="*{userID}">userName Error</td>
+        </tr>
+        <tr>
+            <td>password:</td>
+            <td><input type="password" th:field="*{password}"/></td>
+            <td class="Error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password Error</td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

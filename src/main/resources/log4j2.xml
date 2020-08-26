@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex
+        </Property>
+    </Properties>
+    <CustomLevels>
+        <!--- Creates new custom level LogUser  -->
+        <CustomLevel name="LOGUSER" intLevel="99"/>
+    </CustomLevels>
+    <Appenders>
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        <RollingFile name="FileAppender" fileName="logs/userLogging.log"
+                     filePattern="logs/userLogging-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.daenisches_bettenlager_programming_task.SpringLoginPage" level="error" additivity="false">
+            <!--- Only the logs on the level LogUser will be logged in the logger file -->
+            <AppenderRef level="logUser" ref="FileAppender"/>
+            <AppenderRef ref="ConsoleAppender"/>
+        </Logger>
+
+        <Root level="error">
+            <AppenderRef ref="ConsoleAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>
